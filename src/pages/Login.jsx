@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { PackageSearch } from "lucide-react";
 import api from "../services/api";
 
 export default function Login() {
@@ -29,8 +30,12 @@ export default function Login() {
     <div className="flex min-h-screen">
       <div className="relative hidden w-115 shrink-0 flex-col overflow-hidden bg-ink-900 p-12 text-paper md:flex">
         <div className="mb-16 flex items-center gap-2">
-          <div className="h-6 w-6 rounded-full bg-linear-to-br from-white via-brass to-[#7c5722] shadow-sm"></div>
-          <span className="font-display text-xl font-bold">WhereIsIt</span>
+          <div className="flex items-center justify-center rounded-md bg-linear-to-br from-brass to-[#7c5722] p-1.5 shadow-sm">
+            <PackageSearch size={22} className="text-white" />
+          </div>
+          <span className="font-display text-xl font-bold tracking-tight">
+            WhereIsIt
+          </span>
         </div>
 
         <div className="z-10">
@@ -112,6 +117,16 @@ export default function Login() {
               Log in
             </button>
           </form>
+
+          <div className="mt-8 text-center font-sans text-[13.5px] text-ink-700">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-brass hover:underline"
+            >
+              Register here
+            </Link>
+          </div>
         </div>
       </div>
     </div>

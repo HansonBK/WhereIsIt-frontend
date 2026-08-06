@@ -1,39 +1,40 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import api from "../services/api";
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (token) {
-      localStorage.setItem("token", token);
-    } else {
-      localStorage.removeItem("token");
-    }
-  }, [token]);
+    const token = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
 
-  const login = (newToken, userData) => {
-    setToken(newToken);
+    if (token && savedUser) {
+      setUser(JSON.parse(savedUser));
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const login = (token, userData) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
-    setToken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
+    setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider
-      value={{ token, user, login, logout, isAuthenticated: !!token }}
-    >
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext);

@@ -1,37 +1,35 @@
-import { Search, User, PackageSearch } from "lucide-react";
+import { Search, User, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+export default function Navbar({ onMenuClick }) {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-700 bg-slate-900/80 p-4 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
-        
-       
-        <Link to="/dashboard" className="flex items-center gap-2 text-emerald-400 transition hover:text-emerald-300">
-          <PackageSearch size={28} />
-          <span className="text-xl font-bold tracking-wide text-white">WhereIsIt</span>
-        </Link>
+    <nav className="sticky top-0 z-30 flex w-full items-center justify-between border-b border-ink-900/10 bg-paper/90 px-4 py-3 backdrop-blur-md sm:px-8 sm:py-4">
+      <div className="flex flex-1 items-center gap-3">
+        <button
+          onClick={onMenuClick}
+          className="flex shrink-0 items-center justify-center rounded-lg p-2 text-ink-900 transition-colors hover:bg-ink-900/5 md:hidden"
+        >
+          <Menu size={20} />
+        </button>
 
-        
-        <div className="hidden w-1/3 items-center rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 md:flex">
-          <Search size={18} className="text-slate-400" />
+        <div className="flex w-full max-w-xl items-center rounded-xl border border-ink-900/15 bg-white px-3 py-2 shadow-xs focus-within:border-brass focus-within:ring-4 focus-within:ring-brass-light">
+          <Search size={16} className="shrink-0 text-ink-500" />
           <input
             type="text"
-            placeholder="Search all items, spaces..."
-            className="ml-2 w-full bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none"
+            placeholder="Search inventory..."
+            className="ml-2.5 w-full bg-transparent font-sans text-xs text-ink-900 placeholder-ink-500 outline-none sm:text-sm"
           />
         </div>
+      </div>
 
-  
-        <div className="flex items-center gap-4">
-          <button className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-slate-300 transition hover:bg-slate-600 hover:text-white">
-            <User size={18} />
-          </button>
-        </div>
-
+      <div className="ml-3 flex shrink-0 items-center gap-3">
+        <Link
+          to="/profile"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink-900 text-paper shadow-card transition hover:bg-brass hover:shadow-card-hover sm:h-10 sm:w-10"
+        >
+          <User size={16} className="sm:h-4.5 sm:w-4.5" />
+        </Link>
       </div>
     </nav>
   );
 }
-
-export default Navbar;
