@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@theme {
+  --color-ink-900: #16213D;
+  --color-ink-700: #5A6785;
+  --color-ink-500: #8C97AE;
+  --color-paper: #F6F4EE;
+  --color-brass: #A8763A;
+  --color-brass-light: #EFE0C4;
+  --color-sage: #5B7A66;
+  --color-sage-light: #E1EAE3;
+  --color-clay: #A6453A;
+  --color-clay-light: #F1DAD6;
+
+  --font-display: "Zilla Slab", serif;
+  --font-sans: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --shadow-card: 0 1px 3px rgba(22,33,61,0.08), 0 6px 16px rgba(22,33,61,0.06);
+  --shadow-card-hover: 0 4px 10px rgba(22,33,61,0.10), 0 14px 28px rgba(22,33,61,0.14);
+}
