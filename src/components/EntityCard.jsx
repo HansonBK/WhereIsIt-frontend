@@ -3,6 +3,7 @@ import { ChevronRight, Edit2, Trash2 } from "lucide-react";
 export default function EntityCard({
   title,
   subtitle,
+  code,
   icon: Icon,
   onClick,
   onEdit,
@@ -20,6 +21,14 @@ export default function EntityCard({
           </div>
 
           <div className="min-w-0">
+            {code && (
+              <div className="mb-1 flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[radial-gradient(circle_at_35%_30%,#fff,#A8763A_55%,#7c5722_100%)]" />
+                <span className="font-mono text-[10.5px] font-semibold tracking-wide text-brass">
+                  {code}
+                </span>
+              </div>
+            )}
             <h3 className="truncate font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-brass sm:text-xl">
               {title}
             </h3>

@@ -52,7 +52,7 @@ export default function ActionModal({
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-ink-900/40 backdrop-blur-sm">
-      <div className="mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-card-hover animate-in fade-in zoom-in-95 duration-200">
+      <div className="mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-card-hover animate-modal-in">
         <div className="mb-6 flex items-center justify-between">
           <h3 className="font-display text-xl font-bold text-ink-900">
             {title}

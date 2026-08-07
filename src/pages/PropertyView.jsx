@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Plus, Box } from "lucide-react";
 import api from "../services/api";
 import EntityCard from "../components/EntityCard";
 import ActionModal from "../components/ActionModal";
+import Breadcrumb from "../components/Breadcrumb";
+import { tagCode } from "../utils/tagCode.js";
 
 export default function PropertyView() {
   const { propertyId } = useParams();
@@ -85,14 +87,8 @@ export default function PropertyView() {
     );
 
   return (
-    <div className="animate-in fade-in duration-500">
-      <div className="mb-6 flex items-center gap-2 font-mono text-xs font-semibold text-ink-700">
-        <Link to="/dashboard" className="hover:text-brass transition-colors">
-          Dashboard
-        </Link>
-        <span className="text-ink-500">›</span>
-        <span className="text-ink-900">{property.name}</span>
-      </div>
+    <div className="animate-fade-in">
+      <Breadcrumb trail={[{ label: property.name }]} />
 
       <div className="mb-8 flex items-center justify-between">
         <div>
@@ -118,12 +114,9 @@ export default function PropertyView() {
             key={space.id}
             title={space.name}
             subtitle="Space"
+            code={tagCode("space", space.id)}
             icon={Box}
-            onClick={() =>
-              navigate(`/space/${space.id}`, {
-                state: { propertyName: property.name, propertyId: property.id },
-              })
-            }
+            onClick={() => navigate(`/space/${space.id}`)}
             onEdit={() => openEditModal(space)}
             onDelete={() => handleDelete(space.id)}
           />

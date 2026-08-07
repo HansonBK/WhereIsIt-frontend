@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Plus, Package } from "lucide-react";
 import api from "../services/api";
 import EntityCard from "../components/EntityCard";
 import ActionModal from "../components/ActionModal";
+import Breadcrumb from "../components/Breadcrumb";
+import { tagCode } from "../utils/tagCode.js";
 
 export default function SpaceView() {
   const { spaceId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { propertyName, propertyId } = location.state || {};
 
   const [space, setSpace] = useState(null);
   const [containers, setContainers] = useState([]);
@@ -86,25 +86,16 @@ export default function SpaceView() {
     return <div className="font-mono text-sm text-clay">Space not found</div>;
 
   return (
-    <div className="animate-in fade-in duration-500">
-      <div className="mb-6 flex items-center gap-2 font-mono text-xs font-semibold text-ink-700">
-        <Link to="/dashboard" className="hover:text-brass transition-colors">
-          Dashboard
-        </Link>
-        <span className="text-ink-500">›</span>
-        {propertyName && propertyId && (
-          <>
-            <Link
-              to={`/property/${propertyId}`}
-              className="hover:text-brass transition-colors"
-            >
-              {propertyName}
-            </Link>
-            <span className="text-ink-500">›</span>
-          </>
-        )}
-        <span className="text-ink-900">{space.name}</span>
-      </div>
+    <div className="animate-fade-in">
+      <Breadcrumb
+        trail={[
+          {
+            label: space.property?.name,
+            to: `/property/${space.property?.id}`,
+          },
+          { label: space.name },
+        ]}
+      />
 
       <div className="mb-8 flex items-center justify-between">
         <div>
@@ -130,17 +121,9 @@ export default function SpaceView() {
             key={container.id}
             title={container.name}
             subtitle="Container"
+            code={tagCode("container", container.id)}
             icon={Package}
-            onClick={() =>
-              navigate(`/container/${container.id}`, {
-                state: {
-                  propertyName: propertyName,
-                  propertyId: propertyId,
-                  spaceName: space.name,
-                  spaceId: space.id,
-                },
-              })
-            }
+            onClick={() => navigate(`/container/${container.id}`)}
             onEdit={() => openEditModal(container)}
             onDelete={() => handleDelete(container.id)}
           />

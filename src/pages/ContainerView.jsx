@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import api from "../services/api";
 import ActionModal from "../components/ActionModal";
+import Breadcrumb from "../components/Breadcrumb";
+import { tagCode } from "../utils/tagCode.js";
 
 export default function ContainerView() {
   const { containerId } = useParams();
-  const location = useLocation();
-  const { propertyName, propertyId, spaceName, spaceId } = location.state || {};
 
   const [container, setContainer] = useState(null);
   const [items, setItems] = useState([]);
@@ -80,36 +80,17 @@ export default function ContainerView() {
     );
 
   return (
-    <div className="animate-in fade-in duration-500">
-      <div className="mb-6 flex items-center gap-2 font-mono text-xs font-semibold text-ink-700">
-        <Link to="/dashboard" className="hover:text-brass transition-colors">
-          Dashboard
-        </Link>
-        <span className="text-ink-500">›</span>
-        {propertyName && propertyId && (
-          <>
-            <Link
-              to={`/property/${propertyId}`}
-              className="hover:text-brass transition-colors"
-            >
-              {propertyName}
-            </Link>
-            <span className="text-ink-500">›</span>
-          </>
-        )}
-        {spaceName && spaceId && (
-          <>
-            <Link
-              to={`/space/${spaceId}`}
-              className="hover:text-brass transition-colors"
-            >
-              {spaceName}
-            </Link>
-            <span className="text-ink-500">›</span>
-          </>
-        )}
-        <span className="text-ink-900">{container.name}</span>
-      </div>
+    <div className="animate-fade-in">
+      <Breadcrumb
+        trail={[
+          {
+            label: container.space?.property?.name,
+            to: `/property/${container.space?.property?.id}`,
+          },
+          { label: container.space?.name, to: `/space/${container.space?.id}` },
+          { label: container.name },
+        ]}
+      />
 
       <div className="mb-8 flex items-center justify-between">
         <div>
@@ -135,9 +116,14 @@ export default function ContainerView() {
             key={item.id}
             className="group flex items-center justify-between rounded-xl border border-ink-900/10 bg-white p-4 shadow-sm transition hover:border-brass/30 hover:shadow-card"
           >
-            <span className="font-sans font-semibold text-ink-900 pr-4">
-              {item.name}
-            </span>
+            <div className="flex items-center gap-3 pr-4">
+              <span className="shrink-0 font-mono text-[10.5px] font-semibold text-brass">
+                {tagCode("item", item.id)}
+              </span>
+              <span className="font-sans font-semibold text-ink-900">
+                {item.name}
+              </span>
+            </div>
             <div className="flex shrink-0">
               <button
                 onClick={() => openEditModal(item)}

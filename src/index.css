@@ -3,7 +3,9 @@
 @theme {
   --color-ink-900: #16213D;
   --color-ink-700: #5A6785;
+  --color-ink-600: #71809B;
   --color-ink-500: #8C97AE;
+  --color-ink-400: #AAB3C7;
   --color-paper: #F6F4EE;
   --color-brass: #A8763A;
   --color-brass-light: #EFE0C4;
@@ -18,4 +20,19 @@
 
   --shadow-card: 0 1px 3px rgba(22,33,61,0.08), 0 6px 16px rgba(22,33,61,0.06);
   --shadow-card-hover: 0 4px 10px rgba(22,33,61,0.10), 0 14px 28px rgba(22,33,61,0.14);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in { animation: fade-in 0.4s ease-out both; }
+.animate-modal-in { animation: modal-in 0.18s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in, .animate-modal-in { animation: none; }
 }

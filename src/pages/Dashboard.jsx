@@ -4,6 +4,7 @@ import { Plus, Home } from "lucide-react";
 import api from "../services/api";
 import EntityCard from "../components/EntityCard";
 import ActionModal from "../components/ActionModal";
+import { tagCode } from "../utils/tagCode.js";
 
 export default function Dashboard() {
   const [properties, setProperties] = useState([]);
@@ -72,8 +73,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="animate-in fade-in duration-500">
-      {/* Header - Stacks on mobile, inline on desktop */}
+    <div className="animate-fade-in">
       <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="font-display text-2xl font-bold text-ink-900 sm:text-3xl">
@@ -104,6 +104,7 @@ export default function Dashboard() {
                 key={prop.id}
                 title={prop.name}
                 subtitle={prop.address || "No address specified"}
+                code={tagCode("property", prop.id)}
                 icon={Home}
                 onClick={() => navigate(`/property/${prop.id}`)}
                 onEdit={() => openEditModal(prop)}
